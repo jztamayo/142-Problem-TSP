@@ -1,19 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "../include/tsp.h"
 
 // max matrix size
 #define MAX_CITIES 20
 
 int read_from_file(int matrix[MAX_CITIES][MAX_CITIES], int *num_cities) {
-    char filename[100];
-    printf("Enter filename (e.g., test.txt): ");
+    char filename[50];
+    char full_path[100];
+
+    printf("Enter filename (.txt not needed): ");
     scanf("%s", filename);
 
-    // sprintf(full_path, "data/%s", filename);
+    snprintf(full_path, sizeof(full_path), "data/%s.txt", filename);
 
-    FILE *fp = fopen(filename, "r");
+    FILE *fp = fopen(full_path, "r");
     if (fp == NULL) {
-        printf("Error: Could not open file %s\n", filename);
+        printf("Error: Could not open file %s\n", full_path);
         return 0;
     }
 
@@ -38,9 +41,6 @@ int main() {
     int num_cities;
     int matrix[MAX_CITIES][MAX_CITIES];
     int choice;
-
-
-
     printf("--- Travelling Salesman Problem Solver ---\n");
 
     printf("1. Manual Input\n");
@@ -83,10 +83,27 @@ int main() {
     }
 
     /* TODO: 
-       call solve_brute_force(matrix, num_cities);
+       call solve_bruteforce(matrix, num_cities);
        call solve_optimized(matrix, num_cities);
        compare timing and results.
     */
+
+    int visited[MAX_CITIES] = {0};
+    int path[MAX_CITIES];
+
+    // we start at city 0
+    visited[0] = 1; 
+    path[0] = 0;
+
+    // we start at city 1 cause we visited 0 already
+    solve_bruteforce(matrix, num_cities, visited, path, 0, 1, 0);
+
+    printf("\nBest Cost: %d\n", best_cost);
+    printf("Best Path: ");
+    for (int i = 0; i < num_cities; i++) {
+        printf("%d -> ", best_path[i]);
+    }
+    printf("0\n"); // return to city 0
 
     return 0;
 }
