@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "../include/tsp.h"
 
-// max matrix size
-#define MAX_CITIES 20
+int best_cost = 1e9;
+int best_path[MAX_CITIES];
 
 int read_from_file(int matrix[MAX_CITIES][MAX_CITIES], int *num_cities) {
     char filename[50];
@@ -87,6 +87,7 @@ int main() {
        call solve_optimized(matrix, num_cities);
        compare timing and results.
     */
+    solve_dynamic(matrix, num_cities);
 
     int visited[MAX_CITIES] = {0};
     int path[MAX_CITIES];

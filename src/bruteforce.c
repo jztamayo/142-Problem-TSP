@@ -2,8 +2,8 @@
 #include "../include/tsp.h"
 
 // large number to represent infinity for the initial minimum
-int best_cost = 1e9; 
-int best_path[MAX_CITIES];
+extern int best_cost; 
+extern int best_path[MAX_CITIES];
 
 void solve_bruteforce(int matrix[MAX_CITIES][MAX_CITIES], int num_cities, int visited[], int path[], int curr_city, int count, int current_cost) {
     
