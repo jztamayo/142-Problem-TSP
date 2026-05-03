@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "../include/tsp.h"
 
 int best_cost = 1e9;
@@ -38,6 +39,7 @@ int read_from_file(int matrix[MAX_CITIES][MAX_CITIES], int *num_cities) {
 }
 
 int main() {
+    struct timespec time_before, time_after;
     int num_cities;
     int matrix[MAX_CITIES][MAX_CITIES];
     int choice;
@@ -69,8 +71,6 @@ int main() {
     } else {
         printf("Invalid choice.\n");
     }
-
-    
     
     printf("\n--- Matrix Loaded Successfully ---\n");
     // confirmation
@@ -87,7 +87,12 @@ int main() {
        call solve_optimized(matrix, num_cities);
        compare timing and results.
     */
+    clock_gettime(CLOCK_MONOTONIC, &time_before);
     solve_dynamic(matrix, num_cities);
+    clock_gettime(CLOCK_MONOTONIC, &time_after);
+            double time_elapsed = (time_after.tv_sec - time_before.tv_sec) + 
+                                (time_after.tv_nsec - time_before.tv_nsec) / 1e9;
+    printf("Dynamic Execution time: %f\n", time_elapsed);
 
     int visited[MAX_CITIES] = {0};
     int path[MAX_CITIES];
@@ -97,14 +102,20 @@ int main() {
     path[0] = 0;
 
     // we start at city 1 cause we visited 0 already
+    clock_gettime(CLOCK_MONOTONIC, &time_before);
     solve_bruteforce(matrix, num_cities, visited, path, 0, 1, 0);
 
+    printf("\nBRUTE FORCE SOLUTION:");
     printf("\nBest Cost: %d\n", best_cost);
     printf("Best Path: ");
     for (int i = 0; i < num_cities; i++) {
         printf("%d -> ", best_path[i]);
     }
     printf("0\n"); // return to city 0
+    clock_gettime(CLOCK_MONOTONIC, &time_after);
+            time_elapsed = (time_after.tv_sec - time_before.tv_sec) + 
+                                (time_after.tv_nsec - time_before.tv_nsec) / 1e9;
+    printf("Brute Force Execution time: %f\n", time_elapsed);
 
     return 0;
 }

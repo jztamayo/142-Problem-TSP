@@ -12,7 +12,7 @@ int memo_set[MAX_CITIES][1 << MAX_CITIES]; // 0 = not computed, 1 = computed
 
 void reconstruct(int starting_city, int num_cities){
     int path[MAX_CITIES];
-    int unvisited = (1 << num_cities) - 1 & ~(1 << starting_city);
+    int unvisited = ((1 << num_cities) - 1) & ~(1 << starting_city);
     int curr = starting_city;
 
     for (int step = 0; step < num_cities - 1; step++) {
@@ -23,13 +23,10 @@ void reconstruct(int starting_city, int num_cities){
     }
 
     printf("Optimal Path: %d -> ", starting_city);
-    for (int step = 0; step < num_cities; step++){
-        if ((step + 1) == num_cities){
-            printf("%d\n", path[step]);
-        } else {
-            printf("%d -> ", path[step]);
-        }
+    for (int step = 0; step < num_cities-1; step++){
+        printf("%d -> ", path[step]);
     }
+    printf("%d\n", starting_city);
 }
 
 int g(int starting_city, int curr_city, int num_cities, int unvisited, int matrix[MAX_CITIES][MAX_CITIES]){    
