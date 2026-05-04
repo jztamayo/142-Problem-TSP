@@ -65,9 +65,10 @@ void solve_2opt(int matrix[MAX_CITIES][MAX_CITIES], int num_cities) {
         for (int i = 1; i < num_cities - 1; i++) {
             for (int k = i + 1; k < num_cities; k++) {
                 
-                // loop back through the list of cities
+                // Loop back through the list of cities
                 int k_next = (k + 1) % num_cities;
-                
+
+                // Compare gain                
                 int current_dist = matrix[path[i-1]][path[i]] + matrix[path[k]][path[k_next]];
                 int new_dist = matrix[path[i-1]][path[k]] + matrix[path[i]][path[k_next]];
 
