@@ -1,7 +1,8 @@
 #ifndef TSP_H
 #define TSP_H
 
-#define MAX_CITIES 20
+#define MAX_CITIES 1000
+#define MAX_CITIES_DP 20 
 extern int best_cost;
 extern int best_path[MAX_CITIES];
 

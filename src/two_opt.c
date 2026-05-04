@@ -75,6 +75,7 @@ void solve_2opt(int matrix[MAX_CITIES][MAX_CITIES], int num_cities) {
                 if (new_dist < current_dist) {
                     reverse_segment(path, i, k);
                     improvement = true;
+                    swaps++;
                 }
             }
         }

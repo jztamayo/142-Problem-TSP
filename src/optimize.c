@@ -6,9 +6,9 @@
 //    https://rosettacode.org/wiki/Held%E2%80%93Karp_algorithm
 //    https://www.youtube.com/watch?v=Q4zHb-Swzro&t=683s
 
-int parent[MAX_CITIES][1 << MAX_CITIES];
-int memo[MAX_CITIES][1 << MAX_CITIES];
-int memo_set[MAX_CITIES][1 << MAX_CITIES]; // 0 = not computed, 1 = computed
+int parent[20][1 << 20];
+int memo[20][1 << 20];
+int memo_set[20][1 << 20];
 
 void reconstruct(int starting_city, int num_cities){
     int path[MAX_CITIES];

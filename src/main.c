@@ -87,19 +87,23 @@ int main() {
        call solve_optimized(matrix, num_cities);
        compare timing and results.
     */
-   
-    clock_gettime(CLOCK_MONOTONIC, &time_before);
-    solve_dynamic(matrix, num_cities);
-    clock_gettime(CLOCK_MONOTONIC, &time_after);
-    double time_elapsed = (time_after.tv_sec - time_before.tv_sec) + 
-                            (time_after.tv_nsec - time_before.tv_nsec) / 1e9;
-    printf("Dynamic Execution time: %f\n", time_elapsed);
+    
+    if (num_cities > 20) {
+        printf("Too many cities for Held-Karp, skipping.\n");
+    } else {
+        clock_gettime(CLOCK_MONOTONIC, &time_before);
+        solve_dynamic(matrix, num_cities);
+        clock_gettime(CLOCK_MONOTONIC, &time_after);
+        double time_elapsed = (time_after.tv_sec - time_before.tv_sec) + 
+                                (time_after.tv_nsec - time_before.tv_nsec) / 1e9;
+        printf("Dynamic Execution time: %f\n", time_elapsed);
+    }
 
     printf("\n--- Running 2-Opt Heuristic ---\n");
     clock_gettime(CLOCK_MONOTONIC, &time_before);
     solve_2opt(matrix, num_cities);
     clock_gettime(CLOCK_MONOTONIC, &time_after);
-    time_elapsed = (time_after.tv_sec - time_before.tv_sec) + 
+    double time_elapsed = (time_after.tv_sec - time_before.tv_sec) + 
                     (time_after.tv_nsec - time_before.tv_nsec) / 1e9;
     printf("2-Opt Execution time: %f\n", time_elapsed);
 
