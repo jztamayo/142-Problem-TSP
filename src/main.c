@@ -42,7 +42,7 @@ int main() {
     struct timespec time_before, time_after;
     int num_cities;
     int matrix[MAX_CITIES][MAX_CITIES];
-    int choice;
+    int choice, run_brute;
     printf("--- Travelling Salesman Problem Solver ---\n");
 
     printf("1. Manual Input\n");
@@ -87,35 +87,57 @@ int main() {
        call solve_optimized(matrix, num_cities);
        compare timing and results.
     */
+   
     clock_gettime(CLOCK_MONOTONIC, &time_before);
     solve_dynamic(matrix, num_cities);
     clock_gettime(CLOCK_MONOTONIC, &time_after);
-            double time_elapsed = (time_after.tv_sec - time_before.tv_sec) + 
-                                (time_after.tv_nsec - time_before.tv_nsec) / 1e9;
+    double time_elapsed = (time_after.tv_sec - time_before.tv_sec) + 
+                            (time_after.tv_nsec - time_before.tv_nsec) / 1e9;
     printf("Dynamic Execution time: %f\n", time_elapsed);
 
-    int visited[MAX_CITIES] = {0};
-    int path[MAX_CITIES];
-
-    // we start at city 0
-    visited[0] = 1; 
-    path[0] = 0;
-
-    // we start at city 1 cause we visited 0 already
+    printf("\n--- Running 2-Opt Heuristic ---\n");
     clock_gettime(CLOCK_MONOTONIC, &time_before);
-    solve_bruteforce(matrix, num_cities, visited, path, 0, 1, 0);
-
-    printf("\nBRUTE FORCE SOLUTION:");
-    printf("\nBest Cost: %d\n", best_cost);
-    printf("Best Path: ");
-    for (int i = 0; i < num_cities; i++) {
-        printf("%d -> ", best_path[i]);
-    }
-    printf("0\n"); // return to city 0
+    solve_2opt(matrix, num_cities);
     clock_gettime(CLOCK_MONOTONIC, &time_after);
-            time_elapsed = (time_after.tv_sec - time_before.tv_sec) + 
-                                (time_after.tv_nsec - time_before.tv_nsec) / 1e9;
-    printf("Brute Force Execution time: %f\n", time_elapsed);
+    time_elapsed = (time_after.tv_sec - time_before.tv_sec) + 
+                    (time_after.tv_nsec - time_before.tv_nsec) / 1e9;
+    printf("2-Opt Execution time: %f\n", time_elapsed);
+
+    printf("Run Bruteforce?\n");
+    printf("1. Run\n");
+    printf("0. Skip\n");
+    printf("Choice: ");
+    scanf("%d", &run_brute);
+
+    if (run_brute == 1) {
+        int visited[MAX_CITIES] = {0};
+        int path[MAX_CITIES];
+
+        // we start at city 0
+        visited[0] = 1; 
+        path[0] = 0;
+        
+        
+        printf("\n--- Running Brute Force Solver ---\n");
+        clock_gettime(CLOCK_MONOTONIC, &time_before);
+        // we start at city 1 cause we visited 0 already
+        solve_bruteforce(matrix, num_cities, visited, path, 0, 1, 0);
+
+        printf("\nBRUTE FORCE SOLUTION:");
+        printf("\nBest Cost: %d\n", best_cost);
+        printf("Best Path: ");
+        for (int i = 0; i < num_cities; i++) {
+            printf("%d -> ", best_path[i]);
+        }
+        printf("0\n"); // return to city 0
+        
+        clock_gettime(CLOCK_MONOTONIC, &time_after);
+        time_elapsed = (time_after.tv_sec - time_before.tv_sec) + 
+                        (time_after.tv_nsec - time_before.tv_nsec) / 1e9;
+        printf("Brute Force Execution time: %f s\n", time_elapsed);
+    } else {
+        printf("\nBrute Force skipped.\n");
+    }
 
     return 0;
 }

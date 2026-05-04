@@ -8,5 +8,7 @@ extern int best_path[MAX_CITIES];
 void solve_bruteforce(int matrix[MAX_CITIES][MAX_CITIES], int num_cities, int visited[], int path[], int curr_city, int count, int current_cost);
 void solve_greedy(int matrix[MAX_CITIES][MAX_CITIES], int num_cities);
 void solve_dynamic(int matrix[MAX_CITIES][MAX_CITIES], int num_cities);
+void solve_2opt(int matrix[MAX_CITIES][MAX_CITIES], int num_cities);
+
 
 #endif
