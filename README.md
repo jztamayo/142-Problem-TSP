@@ -15,6 +15,10 @@ Build the file using the make file
 Run the file
 - ./tsp_solver
 
+Sample Flow:
+- Select Load from File
+- Enter file name (ex. 20) of file in the data folder
+
 ## Sources
 - https://www.youtube.com/watch?v=Q4zHb-Swzro&t=683s
 - https://rosettacode.org/wiki/Held%E2%80%93Karp_algorithm
